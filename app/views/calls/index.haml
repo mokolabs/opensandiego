@@ -1,0 +1,55 @@
+%h1 Listing calls
+
+= form_for "/calls", :html => {:method => :get} do |f|
+  
+  %select
+    %option July
+  
+  %select{:name => "day"}
+    - (1..15).each do |day|
+      - if day == @day.to_i
+        %option{:value => day, :selected => "selected"}= day
+      - else
+        %option{:value => day}= day
+  
+  = f.submit "Go"
+
+%p= page_entries_info number_with_delimiter(@calls)
+
+= image_tag(Gchart.line( |
+            :size => '960x200', |
+            :title => "Response time (in seconds)", |
+            :bg => 'efefef', |
+            :data => @response_times,
+            :max_value => @response_times.last,
+            :axis_with_labels => ['y']))
+            
+#map
+
+%ul#map-side-bar
+  - @calls.each_with_index do |call, index|
+    %li.map-location{"data-jmapping" => "{id: #{index}, point: {lat: #{call.ali_latitude}, lng: #{call.ali_longitude}}}"}
+      .info-box
+        = "#{call.ali_query_timestamp},"
+        = "#{call.seizure_datetime},"
+        = "#{call.queue_secs},"
+        = "#{call.ring_secs},"
+        = "#{call.answer_secs},"
+        = "#{call.duration_secs},"
+        = "#{call.hold_secs},"
+        = "#{call.release_secs},"
+        = "#{call.talk_secs},"
+        = "#{call.release_date_time},"
+        = "#{call.line_number},"
+        = "#{call.ali_esn},"
+        = "#{call.tower_address},"
+        = "#{call.city},"
+        = "#{call.directional},"
+        = "#{call.ali_latitude},"
+        = "#{call.ali_longitude},"
+        = "#{call.isabandoned},"
+        = "#{call.transfer_number},"
+        = "#{call.transferred},"
+        = "#{call.nena_id},"
+
+%p= will_paginate @calls
