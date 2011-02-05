@@ -2,5 +2,10 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 $(document).ready(function(){
-  $('#map').jMapping();
+  $('#map').jMapping({
+    category_icon_options: {
+      'good': {color: '#7CDF65'},
+      'bad': {color: '#E8413A'}
+    }}
+  );
 });

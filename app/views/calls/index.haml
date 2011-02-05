@@ -28,7 +28,7 @@
 
 %ul#map-side-bar
   - @calls.each_with_index do |call, index|
-    %li.map-location{"data-jmapping" => "{id: #{index}, point: {lat: #{call.ali_latitude}, lng: #{call.ali_longitude}}}"}
+    %li.map-location{"data-jmapping" => "{id: #{index}, point: {lat: #{call.ali_latitude}, lng: #{call.ali_longitude}}, category: '#{call.category}'}"}
       .info-box
         = "#{call.ali_query_timestamp},"
         = "#{call.seizure_datetime},"
