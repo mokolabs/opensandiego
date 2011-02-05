@@ -1,17 +1,17 @@
 class CallsController < ApplicationController
 
   def index
-    # Grab day
+    # Grab day (if present)
     unless params[:day].blank?
       @selected_day = params[:day]
       @day = params[:day]
-    # Default
+    # Otherwise, default to 1st of month
     else
       @selected_day = "1"
       @day = "1"
     end
     
-    # Pad day if necesary
+    # Add leading zero if necessary
     if @selected_day.length == 1
       @selected_day = "0" + @selected_day
     end
@@ -23,11 +23,8 @@ class CallsController < ApplicationController
     # Grab response times of calls
     @response_times = @calls.map(&:duration_secs).sort
     
+    # Get longest call time for current page
     @max = @calls.last.duration_secs
-  end
-
-  def show
-    @call = Call.find(params[:id])
   end
 
 end
